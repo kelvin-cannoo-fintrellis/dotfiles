@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+cd ~/repos/payment-gateway-chassis
+
+docker-compose -f docker-compose.infra.yml down -v
+
+docker-compose -f docker-compose.infra.yml build --no-cache pg-executor
+
+docker-compose -f docker-compose.infra.yml up -d redis postgresql clickhouse cloudbeaver sftp smtp4dev
+
+echo "Waiting for postgresql to be healthy..."
+until docker inspect --format='{{.State.Health.Status}}' postgresql 2>/dev/null | grep -q "healthy"; do
+  sleep 2
+  echo "Still waiting..."
+done
+
+echo "PostgreSQL is healthy. Running migrations..."
+
+docker-compose -f docker-compose.infra.yml run --rm pg-executor
+
+echo "DB reset complete."
