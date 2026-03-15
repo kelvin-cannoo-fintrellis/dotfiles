@@ -107,12 +107,6 @@ source $ZSH/oh-my-zsh.sh
 # Posted by GorvGoyl
 # Retrieved 2026-01-12, License - CC BY-SA 4.0
 
-
-# Export vars for claude code to work with ollama
-# Ref: https://ollama.com/blog/claude
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_BASE_URL=http://localhost:11434
-
 # use tab to autocomplete zsh-autosuggestions
 # Ref: https://github.com/zsh-users/zsh-autosuggestions/issues/656#issuecomment-1602287023
 bindkey '^I' autosuggest-accept
