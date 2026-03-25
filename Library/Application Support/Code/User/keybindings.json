@@ -1,0 +1,60 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.view.search",
+        "when": "workbench.view.search.active && neverMatch =~ /doesNotMatch/"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.action.terminal.searchWorkspace",
+        "when": "terminalFocus && terminalProcessSupported && terminalTextSelected"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "editor.action.formatDocument",
+        "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "-editor.action.formatDocument",
+        "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "editor.action.formatDocument.none",
+        "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "-editor.action.formatDocument.none",
+        "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "workbench.action.findInFiles"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-actions.findWithSelection"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-editor.action.toggleScreenReaderAccessibilityMode",
+        "when": "accessibilityHelpIsShown"
+    },
+    {
+        "key": "cmd+e",
+        "command": "cursorLineEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "-cursorLineEnd",
+        "when": "textInputFocus"
+    }
+]
