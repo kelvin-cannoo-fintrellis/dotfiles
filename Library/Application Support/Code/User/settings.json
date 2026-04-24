@@ -33,5 +33,14 @@
     "explorer.confirmDragAndDrop": false,
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.smoothScrolling": true,
-    "terminal.integrated.smoothScrolling": true
+    "terminal.integrated.smoothScrolling": true,
+    "git.confirmSync": false,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "terminal.integrated.initialHint": false,
+    "[dockercompose]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "makefile.configureOnOpen": true
 }
