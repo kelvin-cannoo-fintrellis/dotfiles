@@ -103,16 +103,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Source - https://stackoverflow.com/a
-# Posted by GorvGoyl
-# Retrieved 2026-01-12, License - CC BY-SA 4.0
-
 # use tab to autocomplete zsh-autosuggestions
 # Ref: https://github.com/zsh-users/zsh-autosuggestions/issues/656#issuecomment-1602287023
 bindkey '^I' autosuggest-accept
 
 # open file or folder in VSCode e.g. code ~/.zshrc
 alias code='open -a "Visual Studio Code"'
+
+# commands to schedule slack messages
+alias slack-day='~/repos/slack-schedule/.venv/bin/python ~/repos/slack-schedule/schedule_today.py'
+alias slack-list='~/repos/slack-schedule/.venv/bin/python ~/repos/slack-schedule/list_scheduled.py'
+alias slack-cancel='~/repos/slack-schedule/.venv/bin/python ~/repos/slack-schedule/cancel_today.py'
 
 # activate zsh autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
