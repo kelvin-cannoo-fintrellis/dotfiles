@@ -42,5 +42,6 @@
     "[dockercompose]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "makefile.configureOnOpen": true
+    "makefile.configureOnOpen": true,
+    "aws.cloudformation.telemetry.enabled": false
 }
