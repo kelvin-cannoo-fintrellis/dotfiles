@@ -133,6 +133,21 @@
                                     }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "home",
+                                    "modifiers": {
+                                        "mandatory": ["command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "end"
+                                    }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     }
