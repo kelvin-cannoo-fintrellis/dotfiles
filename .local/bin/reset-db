@@ -1,22 +1,31 @@
 #!/bin/bash
 set -e
 
-cd ~/repos/payment-gateway-chassis
+# Wipes the shared database volume and re-runs every migration from scratch.
+# Database bootstrap is split by ownership: the chassis owns the PSP-agnostic schema
+# and seed data, each PSP repo owns its own databases and acquirer rows. Each repo's
+# `make db-migrate` runs the chassis executor first, then its own.
+#
+# The wipe happens once here, so that resetting both PSPs leaves both sets of data in
+# the shared database instead of the second wipe clearing the first PSP's.
+#
+# usage: reset-db [fuze|payin|both]   (default: both)
 
-docker-compose -f docker-compose.infra.yml down -v
+CHASSIS=~/repos/payment-gateway-chassis
 
-docker-compose -f docker-compose.infra.yml build --no-cache pg-executor
+case "${1:-both}" in
+  fuze)  PSPS=(fuze) ;;
+  payin) PSPS=(payin) ;;
+  both)  PSPS=(fuze payin) ;;
+  *)     echo "usage: reset-db [fuze|payin|both]" >&2; exit 1 ;;
+esac
 
-docker-compose -f docker-compose.infra.yml up -d redis postgresql sftp smtp4dev
+echo "=== Wiping infrastructure volumes ==="
+docker compose -f "$CHASSIS/docker-compose.infra.yml" down -v
 
-echo "Waiting for postgresql to be healthy..."
-until docker inspect --format='{{.State.Health.Status}}' postgresql 2>/dev/null | grep -q "healthy"; do
-  sleep 2
-  echo "Still waiting..."
+for psp in "${PSPS[@]}"; do
+  echo "=== Migrating databases for $psp ==="
+  (cd ~/repos/"$psp"-payment-gateway && make db-migrate)
 done
-
-echo "PostgreSQL is healthy. Running migrations..."
-
-docker-compose -f docker-compose.infra.yml run --rm pg-executor
 
 echo "DB reset complete."
