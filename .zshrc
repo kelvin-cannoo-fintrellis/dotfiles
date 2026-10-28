@@ -123,3 +123,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$(brew --prefix nvm)/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix nvm)/etc/bash_completion.d/nvm"
 
 . "$HOME/.local/bin/env"
+
+# pnpm
+export PNPM_HOME="/Users/kelvin.cannoo/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
