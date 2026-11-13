@@ -131,3 +131,13 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+# bun completions
+[ -s "/Users/kelvin.cannoo/.bun/_bun" ] && source "/Users/kelvin.cannoo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
+export PATH="/opt/homebrew/opt/python@3.13/libexec/bin:$PATH"
+alias chrome-lan='"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" >/dev/null 2>&1 &'
