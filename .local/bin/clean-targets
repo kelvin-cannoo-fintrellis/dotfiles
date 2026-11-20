@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# clean-targets: find and delete Rust `target` dirs (those with a sibling Cargo.toml).
+# Usage: clean-targets [-n|--dry-run] [-y|--yes] [-d DEPTH] [ROOT]
+#   ROOT defaults to ~/repos, DEPTH defaults to 4 (same as find -maxdepth).
+set -euo pipefail
+
+root="$HOME/repos"
+depth=4
+dry=0
+yes=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -n|--dry-run) dry=1 ;;
+    -y|--yes) yes=1 ;;
+    -d) depth="$2"; shift ;;
+    -h|--help) sed -n '2,4p' "$0"; exit 0 ;;
+    *) root="$1" ;;
+  esac
+  shift
+done
+
+dirs=()
+while IFS= read -r -d '' d; do
+  [ -f "$(dirname "$d")/Cargo.toml" ] && dirs+=("$d")
+done < <(find "$root" -maxdepth "$depth" -name target -type d -prune -print0)
+
+if [ ${#dirs[@]} -eq 0 ]; then
+  echo "No Rust target dirs found under $root"
+  exit 0
+fi
+
+echo "Rust target dirs under $root:"
+du -sh "${dirs[@]}" | sort -rh
+echo "Total:"; du -shc "${dirs[@]}" | tail -1
+
+[ "$dry" -eq 1 ] && { echo "(dry run, nothing deleted)"; exit 0; }
+
+if [ "$yes" -ne 1 ]; then
+  read -r -p "Delete all of the above? [y/N] " ans
+  [[ "$ans" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 1; }
+fi
+
+for d in "${dirs[@]}"; do
+  rm -rf "$d" && echo "removed $d"
+done
+echo "Done."
